@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<property resource="logging.properties" />
+	
+	<!-- Console appender -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>${console.pattern}</Pattern>
+		</layout>
+	</appender>
+
+
+	<!-- File Appender -->
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${file.location}/${file.name}</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${file.location}/${file.pattern}</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>${file.maxSize}</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<maxHistory>${file.maxHistory}</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>${file.encoderPattern}
+			</pattern>
+		</encoder>
+	</appender>
+
+
+	<logger name="com.account" level="${logging.level}" />
+
+	<root level="${logging.level}">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</root>
+</configuration>
